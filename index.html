@@ -4,6 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>License Key</title>
+
+    <!-- Google AdSense Script -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script>
+        (adsbygoogle = window.adsbygoogle || []).push({
+            google_ad_client: "ca-pub-6157629193648782", /* Replace with your AdSense publisher ID */
+            enable_page_level_ads: true
+        });
+    </script>
+
     <style>
         body { 
             font-family: Arial, sans-serif; 
@@ -16,6 +26,8 @@
             background-color: #444; 
             padding: 20px; 
             border-radius: 10px; 
+            max-width: 600px;
+            margin: auto;
         }
         .key { 
             font-size: 24px; 
@@ -33,15 +45,17 @@
         .error {
             color: #ff0000;
         }
+        .ad-container {
+            margin: 20px 0;
+        }
     </style>
+
     <script>
-        // Function to generate a random license key
         function generateLicenseKey() {
             const prefix = "DEMONGOD-BYPASSS-";
             const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
             let randomKey = prefix;
 
-            // Generate 13 random characters and append them to the key
             for (let i = 0; i < 13; i++) {
                 randomKey += characters.charAt(Math.floor(Math.random() * characters.length));
             }
@@ -49,19 +63,17 @@
             return randomKey;
         }
 
-        // Function to fetch the current time from the server or fallback to local time
         async function fetchServerTime() {
             try {
-                const response = await fetch('http://worldtimeapi.org/api/timezone/Etc/UTC'); // Free API for UTC time
+                const response = await fetch('http://worldtimeapi.org/api/timezone/Etc/UTC');
                 const data = await response.json();
                 return new Date(data.utc_datetime);
             } catch (error) {
                 console.error('Error fetching server time:', error);
-                return new Date(); // Fallback to local time
+                return new Date();
             }
         }
 
-        // Function to format the time into a readable format
         function formatTimestamp(timestamp) {
             if (isNaN(timestamp)) return "Invalid Date";
             const date = new Date(timestamp);
@@ -71,31 +83,25 @@
             return `${date.toDateString()} ${hours}:${minutes}:${seconds}`;
         }
 
-        // Function to handle license key generation and timing logic
         async function displayLicenseKey() {
             try {
                 const serverTime = await fetchServerTime();
                 const currentTime = serverTime.getTime();
 
-                // Retrieve stored times from localStorage
                 const storedLandingTime = parseInt(localStorage.getItem('landingTime'), 10);
                 const storedNextGenTime = parseInt(localStorage.getItem('nextGenerationTime'), 10);
 
                 if (!storedLandingTime || !storedNextGenTime || currentTime >= storedNextGenTime) {
-                    // Generate a new key if no times are stored or the cooldown period has expired
                     const newKey = generateLicenseKey();
                     const nextGenerationTime = currentTime + 4 * 60 * 1000; // 4 minutes in milliseconds
 
-                    // Save the new times to localStorage
                     localStorage.setItem('landingTime', currentTime);
                     localStorage.setItem('nextGenerationTime', nextGenerationTime);
 
-                    // Update the UI with the new key and times
                     document.getElementById('license-key').innerText = newKey;
                     document.getElementById('last-generated').innerText = `First visit: ${formatTimestamp(currentTime)}`;
                     document.getElementById('next-generation').innerText = `Next generation available at: ${formatTimestamp(nextGenerationTime)}`;
                 } else {
-                    // Show the previously stored key and times
                     document.getElementById('license-key').innerText = "Key generation is on cooldown!";
                     document.getElementById('last-generated').innerText = `First visit: ${formatTimestamp(storedLandingTime)}`;
                     document.getElementById('next-generation').innerText = `Next generation available at: ${formatTimestamp(storedNextGenTime)}`;
@@ -112,15 +118,46 @@
     </script>
 </head>
 <body>
+
+    <!-- AdSense Ad Banner -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-6157629193648782" 
+            data-ad-slot="6157629193648782" 
+            data-ad-format="auto"
+            data-full-width-responsive="true">
+        </ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
     <div class="container">
         <h1>Your License Key:</h1>
-        <p class="key" id="license-key">Loading...</p> <!-- Key will be dynamically loaded -->
+        <p class="key" id="license-key">Loading...</p>
 
         <div class="info">
             <p id="last-generated">First visit: Loading...</p>
             <p id="next-generation">Next generation available at: Loading...</p>
         </div>
-        <p id="error-message" class="error"></p> <!-- Error message placeholder -->
+        <p id="error-message" class="error"></p>
     </div>
+
+    <!-- Another AdSense Ad at the Bottom -->
+    <div class="ad-container">
+        <ins class="adsbygoogle"
+            style="display:block"
+            data-ad-client="ca-pub-XXXXXXXXXX" 
+            data-ad-slot="XXXXXXXXXX" 
+            data-ad-format="auto"
+            data-full-width-responsive="true">
+        </ins>
+        <script>
+            (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+    </div>
+
 </body>
 </html>
+
